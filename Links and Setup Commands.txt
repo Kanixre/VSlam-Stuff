@@ -1,4 +1,4 @@
-Links and Commands for AML Task 2
+Links and Commands
 -----
 script used
 python3 evaluate_ate_scale_2.py GPS_TUM_March KeyFrameTrajectory_march.txt --offset 0.1 --scale 1.2 --max_difference 10000000 --save aligned_trajectory.txt --plot trajectory_plot.png --verbose
@@ -83,71 +83,3 @@ do_rectify: False1920
 
 https://arxiv.org/abs/2007.11898
 
-
----------------------
-python sb-SuperMarioBrosTest.py train
-
-Commands for Ubuntu
-=
---
-install dependencies=
-
-sudo apt-get update
-sudo apt-get -y install freeglut3-dev
-pip install gym==0.21.0
-pip install swig
-pip install box2d-py
-pip install gymnasium
-pip install pyglet==1.5.11
-pip install stable-baselines3[extra]==1.8.0
-pip install gym-super-mario-bros==7.3.0
---
-run train and test code
----
-Commands for Ubuntu
-=
-Check for nvidia-smi
-create virtual environment
---
-sudo pip3 install virtualenv
-virtualenv venv
-source venv/bin/activate
-deactivate
---
-python
-import torch 
-torch.cuda.is_available()
--if 'True', continue
---
-sudo apt-get update
-sudo apt-get -y install freeglut3-dev
---
-pip install gym==0.21.0
-pip install swig
-pip install box2d-py
-pip install gymnasium
-pip install pyglet==1.5.11
-pip install stable-baselines3[extra]==1.8.0
-pip install gym-super-mario-bros==7.3.0
---
-run train and test code
-------
-Links
-https://www.kaggle.com/code/deeplyai/super-mario-bros-with-stable-baseline3-ppo
-
-https://stable-baselines3.readthedocs.io/en/master/index.html
-
-https://stable-baselines3.readthedocs.io/en/master/modules/dqn.html
-
-https://stable-baselines3.readthedocs.io/en/master/modules/a2c.html
-
-https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html
-
-
-https://github.com/search?q=supermariobros+reinforcement+learning&type=repositories
-
-https://github.com/yumouwei/super-mario-bros-reinforcement-learning
-
-https://github.com/CyberDatta/ai_controlled_mario
-
-https://github.com/Talendar/super_mario_dqn/blob/master/main.py
