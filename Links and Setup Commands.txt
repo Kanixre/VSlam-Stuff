@@ -1,0 +1,153 @@
+Links and Commands for AML Task 2
+-----
+script used
+python3 evaluate_ate_scale_2.py GPS_TUM_March KeyFrameTrajectory_march.txt --offset 0.1 --scale 1.2 --max_difference 10000000 --save aligned_trajectory.txt --plot trajectory_plot.png --verbose
+
+Results from the March Ground Truth and KeyframeTrajectory using the evaluate_ate_scale code
+compared_pose_pairs 587 pairs
+absolute_translational_error.rmse 13.754493 m
+absolute_translational_error.mean 12.382842 m
+absolute_translational_error.median 12.086141 m
+absolute_translational_error.std 5.987597 m
+absolute_translational_error.min 0.481406 m
+absolute_translational_error.max 26.141416 m
+max idx: 565
+
+
+python script.py ground_truth.txt estimated.txt --offset 0.1 --scale 1.2 --max_difference 10000000 --save aligned_trajectory.txt --plot trajectory_plot.png --verbose
+
+
+https://lcas.lincoln.ac.uk/nextcloud/index.php/s/q73JHG6xWwX3Lqf
+
+# Install ROS
+# http://wiki.ros.org/noetic/Installation/Ubuntu
+sudo apt install ros-noetic-desktop-full
+
+git clone https://github.com/lturing/ORB_SLAM3_ROS.git
+cd ORB_SLAM3_ROS
+chmod +x ./build.sh 
+./build.sh 
+
+# Download datasets
+# https://www.cvlibs.net/datasets/kitti/eval_odometry.php
+# https://cvg.cit.tum.de/data/datasets/rgbd-dataset/download
+
+# Generate associate.txt (example)
+python evaluation/associate.py /home/spurs/dataset/rgbd_dataset_freiburg2_large_with_loop/rgb.txt /home/spurs/dataset/rgbd_dataset_freiburg2_large_with_loop/depth.txt >> associate.txt
+
+# Run monocular
+# Modify launch/orb_slam_mono.launch as needed
+chmod +x ./run_mono.sh
+./run_mono.sh 
+
+# Run stereo
+# Modify launch/orb_slam_stereo.launch as needed
+chmod +x ./run_stereo.sh 
+./run_stereo.sh 
+
+# Run RGB-D dense mapping
+# Modify launch/orb_slam_rgbd_mapping.launch as needed
+chmod +x ./run_rgbd_mapping.sh 
+./run_rgbd_mapping.sh 
+
+header:
+frame_id: "front_left_camera_optical_frame"
+ 
+height: 1080
+width: 1920
+ 
+distortion_model: "plumb_bob"
+ 
+D: [0.0, 0.0, 0.0, 0.0, 0.0]
+ 
+K: [1057.0008544921875,       0.0,                952.2301635742188,
+     0.0,                  1057.0008544921875,      553.5770263671875,     
+     0.0,                                      0.0,                                           1.0]
+ 
+R: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+ 
+P: [1057.0008544921875,       0.0,                952.2301635742188,
+      0.0,                                     0.0,              1057.0008544921875,
+      553.5770263671875,         0.0,                                            0.0,
+      0.0,                                     1.0,                                           0.0]
+ 
+binning_x: 0
+binning_y: 0
+roi:
+x_offset: 0
+y_offset: 0
+height: 0
+width: 0
+do_rectify: False1920
+
+
+https://arxiv.org/abs/2007.11898
+
+
+---------------------
+python sb-SuperMarioBrosTest.py train
+
+Commands for Ubuntu
+=
+--
+install dependencies=
+
+sudo apt-get update
+sudo apt-get -y install freeglut3-dev
+pip install gym==0.21.0
+pip install swig
+pip install box2d-py
+pip install gymnasium
+pip install pyglet==1.5.11
+pip install stable-baselines3[extra]==1.8.0
+pip install gym-super-mario-bros==7.3.0
+--
+run train and test code
+---
+Commands for Ubuntu
+=
+Check for nvidia-smi
+create virtual environment
+--
+sudo pip3 install virtualenv
+virtualenv venv
+source venv/bin/activate
+deactivate
+--
+python
+import torch 
+torch.cuda.is_available()
+-if 'True', continue
+--
+sudo apt-get update
+sudo apt-get -y install freeglut3-dev
+--
+pip install gym==0.21.0
+pip install swig
+pip install box2d-py
+pip install gymnasium
+pip install pyglet==1.5.11
+pip install stable-baselines3[extra]==1.8.0
+pip install gym-super-mario-bros==7.3.0
+--
+run train and test code
+------
+Links
+https://www.kaggle.com/code/deeplyai/super-mario-bros-with-stable-baseline3-ppo
+
+https://stable-baselines3.readthedocs.io/en/master/index.html
+
+https://stable-baselines3.readthedocs.io/en/master/modules/dqn.html
+
+https://stable-baselines3.readthedocs.io/en/master/modules/a2c.html
+
+https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html
+
+
+https://github.com/search?q=supermariobros+reinforcement+learning&type=repositories
+
+https://github.com/yumouwei/super-mario-bros-reinforcement-learning
+
+https://github.com/CyberDatta/ai_controlled_mario
+
+https://github.com/Talendar/super_mario_dqn/blob/master/main.py
