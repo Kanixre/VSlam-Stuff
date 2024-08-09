@@ -1,6 +1,45 @@
 Links and Commands
 -----
+import rosbag
+import rospy
+from sensor_msgs.msg import CompressedImage
+from cv_bridge import CvBridge
+from PIL import Image as PILImage
+import numpy as np
+import cv2
 
+# Initialize a CvBridge to convert ROS Image messages to OpenCV format
+bridge = CvBridge()
+
+# Path to your ROS bag
+rosbag_path = 'path_to_your_rosbag.bag'
+
+# Name of the topic where the compressed image is published in the ROS bag
+image_topic = '/camera/image_raw/compressed'
+
+# Open the ROS bag
+with rosbag.Bag(rosbag_path, 'r') as bag:
+    # Iterate through the messages in the bag
+    for topic, msg, t in bag.read_messages(topics=[image_topic]):
+        if topic == image_topic:
+            # Convert the ROS CompressedImage message to a NumPy array using OpenCV
+            np_arr = np.frombuffer(msg.data, np.uint8)
+            cv_image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+
+            # Convert the OpenCV image (BGR) to RGB for PIL
+            cv_image_rgb = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
+
+            # Convert the NumPy array to a PIL image
+            pil_image = PILImage.fromarray(cv_image_rgb)
+
+            # Save or display the image using PIL
+            pil_image.show()  # Display the image
+            # pil_image.save('output_image.png')  # Save the image
+
+            # Break after processing the first image (if you only want to process one)
+            break
+
+-----------------------------------------------------------------------------
 import rosbag
 import rospy
 from sensor_msgs.msg import Image
