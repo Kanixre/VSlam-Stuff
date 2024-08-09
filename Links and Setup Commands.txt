@@ -1,20 +1,40 @@
 Links and Commands
 -----
-script used
-python3 evaluate_ate_scale_2.py GPS_TUM_March KeyFrameTrajectory_march.txt --offset 0.1 --scale 1.2 --max_difference 10000000 --save aligned_trajectory.txt --plot trajectory_plot.png --verbose
 
-Results from the March Ground Truth and KeyframeTrajectory using the evaluate_ate_scale code
-compared_pose_pairs 587 pairs
-absolute_translational_error.rmse 13.754493 m
-absolute_translational_error.mean 12.382842 m
-absolute_translational_error.median 12.086141 m
-absolute_translational_error.std 5.987597 m
-absolute_translational_error.min 0.481406 m
-absolute_translational_error.max 26.141416 m
-max idx: 565
+import rosbag
+import rospy
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
+from PIL import Image as PILImage
+import numpy as np
 
+# Initialize a CvBridge to convert ROS Image messages to OpenCV format
+bridge = CvBridge()
 
-python script.py ground_truth.txt estimated.txt --offset 0.1 --scale 1.2 --max_difference 10000000 --save aligned_trajectory.txt --plot trajectory_plot.png --verbose
+# Path to your ROS bag
+rosbag_path = 'path_to_your_rosbag.bag'
+
+# Name of the topic where the image is published in the ROS bag
+image_topic = '/camera/image_raw'
+
+# Open the ROS bag
+with rosbag.Bag(rosbag_path, 'r') as bag:
+    # Iterate through the messages in the bag
+    for topic, msg, t in bag.read_messages(topics=[image_topic]):
+        if topic == image_topic:
+            # Convert the ROS Image message to a NumPy array using CvBridge
+            cv_image = bridge.imgmsg_to_cv2(msg, desired_encoding='passthrough')
+            
+            # Convert the NumPy array to a PIL image
+            pil_image = PILImage.fromarray(cv_image)
+
+            # Save or display the image using PIL
+            pil_image.show()  # Display the image
+            # pil_image.save('output_image.png')  # Save the image
+
+            # Break after processing the first image (if you only want to process one)
+            break
+----------------------------------------------------------------------------------------------------
 
 
 https://lcas.lincoln.ac.uk/nextcloud/index.php/s/q73JHG6xWwX3Lqf
