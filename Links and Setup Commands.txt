@@ -13,48 +13,58 @@ https://lcas.lincoln.ac.uk/nextcloud/index.php/s/q73JHG6xWwX3Lqf
 #!/usr/bin/env python
 
 import rospy
-from sensor_msgs.msg import Image
-from cv_bridge import CvBridge
 import cv2
+from cv_bridge import CvBridge
+from sensor_msgs.msg import Image
 
-def publish_image():
+def publish_images():
     # Initialize the ROS node
     rospy.init_node('image_publisher', anonymous=True)
-
-    # Create a publisher for the topic /camera/image
-    image_pub = rospy.Publisher('/camera/image', Image, queue_size=10)
-
-    # Create an object of CvBridge to convert between ROS and OpenCV image formats
+    
+    # Create a ROS publisher
+    image_pub = rospy.Publisher('/camera/image_raw', Image, queue_size=10)
+    
+    # Initialize the CvBridge class
     bridge = CvBridge()
+    
+    # Option 1: Publish images from a video stream (e.g., webcam)
+    # cap = cv2.VideoCapture(0)  # For webcam
+    cap = cv2.VideoCapture('/path/to/video.mp4')  # For video file
 
-    # Read an image using OpenCV
-    img = cv2.imread('/path/to/your/image.jpg')  # Replace with the path to your image
-
-    # Convert the OpenCV image to a ROS Image message
-    img_msg = bridge.cv2_to_imgmsg(img, encoding="bgr8")
-
-    # Set the loop rate (in Hz)
-    rate = rospy.Rate(10)  # Publish at 10 Hz
-
+    # Option 2: Publish images from a directory (e.g., a series of images)
+    # import glob
+    # image_paths = sorted(glob.glob('/path/to/images/*.jpg'))
+    
+    rate = rospy.Rate(10)  # Set a publishing rate (e.g., 10 Hz)
+    
     while not rospy.is_shutdown():
-        # Publish the image message
-        image_pub.publish(img_msg)
+        # Option 1: Read from video or webcam
+        ret, frame = cap.read()
+        if not ret:
+            rospy.loginfo("No frame captured from video stream.")
+            break
+
+        # Option 2: Read from a list of images
+        # for img_path in image_paths:
+        #     frame = cv2.imread(img_path)
+        
+        # Convert the OpenCV image to ROS Image message
+        ros_image = bridge.cv2_to_imgmsg(frame, encoding="bgr8")
+        
+        # Publish the image
+        image_pub.publish(ros_image)
+        
+        # Maintain the loop rate
         rate.sleep()
+    
+    # Release the video capture object
+    cap.release()
 
 if __name__ == '__main__':
     try:
-        publish_image()
+        publish_images()
     except rospy.ROSInterruptException:
         pass
-
-
-------------
-chmod +x your_script_name.py
-------------
-./your_script_name.py
-------------
-rqt_image_view /camera/image
-
 
 ---------------------------------------------------------------------------------------------------
 
