@@ -7,40 +7,56 @@ rosbag play --pause kg_lc_march.bag # replace with desired bag name
 rosrun image_transport republish compressed in:=/front/zed_node/rgb/image_rect_color raw out:=/camera/image_raw
 
 ---------------------------------------------------------------------------------------------------
-
-
 https://lcas.lincoln.ac.uk/nextcloud/index.php/s/q73JHG6xWwX3Lqf
 
-# Install ROS
-# http://wiki.ros.org/noetic/Installation/Ubuntu
-sudo apt install ros-noetic-desktop-full
+---------------------------------------------------------------------------------------------------
+#!/usr/bin/env python
 
-git clone https://github.com/lturing/ORB_SLAM3_ROS.git
-cd ORB_SLAM3_ROS
-chmod +x ./build.sh 
-./build.sh 
+import rospy
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
+import cv2
 
-# Download datasets
-# https://www.cvlibs.net/datasets/kitti/eval_odometry.php
-# https://cvg.cit.tum.de/data/datasets/rgbd-dataset/download
+def publish_image():
+    # Initialize the ROS node
+    rospy.init_node('image_publisher', anonymous=True)
 
-# Generate associate.txt (example)
-python evaluation/associate.py /home/spurs/dataset/rgbd_dataset_freiburg2_large_with_loop/rgb.txt /home/spurs/dataset/rgbd_dataset_freiburg2_large_with_loop/depth.txt >> associate.txt
+    # Create a publisher for the topic /camera/image
+    image_pub = rospy.Publisher('/camera/image', Image, queue_size=10)
 
-# Run monocular
-# Modify launch/orb_slam_mono.launch as needed
-chmod +x ./run_mono.sh
-./run_mono.sh 
+    # Create an object of CvBridge to convert between ROS and OpenCV image formats
+    bridge = CvBridge()
 
-# Run stereo
-# Modify launch/orb_slam_stereo.launch as needed
-chmod +x ./run_stereo.sh 
-./run_stereo.sh 
+    # Read an image using OpenCV
+    img = cv2.imread('/path/to/your/image.jpg')  # Replace with the path to your image
 
-# Run RGB-D dense mapping
-# Modify launch/orb_slam_rgbd_mapping.launch as needed
-chmod +x ./run_rgbd_mapping.sh 
-./run_rgbd_mapping.sh 
+    # Convert the OpenCV image to a ROS Image message
+    img_msg = bridge.cv2_to_imgmsg(img, encoding="bgr8")
+
+    # Set the loop rate (in Hz)
+    rate = rospy.Rate(10)  # Publish at 10 Hz
+
+    while not rospy.is_shutdown():
+        # Publish the image message
+        image_pub.publish(img_msg)
+        rate.sleep()
+
+if __name__ == '__main__':
+    try:
+        publish_image()
+    except rospy.ROSInterruptException:
+        pass
+
+
+------------
+chmod +x your_script_name.py
+------------
+./your_script_name.py
+------------
+rqt_image_view /camera/image
+
+
+---------------------------------------------------------------------------------------------------
 
 header:
 frame_id: "front_left_camera_optical_frame"
