@@ -1,11 +1,14 @@
 Links and Commands
 -----
-
 roscore
 rosrun ORB_SLAM3 Mono Vocabulary/ORBvoc.txt Examples_old/ZED2.yaml
 rosbag play --pause kg_lc_march.bag # replace with desired bag name
 rosrun image_transport republish compressed in:=/front/zed_node/rgb/image_rect_color raw out:=/camera/image_raw
 
+------
+evo_ape tum GPS_march.tum KeyFrameTrajectory_yz.txt --verbose --align --correct_scale
+
+evo_traj tum  KeyFrameTrajectory.txt -vap --ref GPS_march.tum --correct_scale
 ---------------------------------------------------------------------------------------------------
 https://lcas.lincoln.ac.uk/nextcloud/index.php/s/q73JHG6xWwX3Lqf
 
