@@ -12,6 +12,25 @@ rosrun image_transport republish compressed in:=/front/zed_node/rgb/image_rect_c
 evo_ape tum GPS_march.tum KeyFrameTrajectory_yz.txt --verbose --align --correct_scale
 
 evo_traj tum  KeyFrameTrajectory.txt -vap --ref GPS_march.tum --correct_scale
+------------
+void ImageGrabber::GrabNewImage(const sensor_msgs::ImageConstPtr& msg)
+{
+    // Convert the ROS image message to the format used by ORB-SLAM3
+    cv_bridge::CvImagePtr cv_ptr;
+    try
+    {
+        cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
+    }
+    catch (cv_bridge::Exception& e)
+    {
+        ROS_ERROR("cv_bridge exception: %s", e.what());
+        return;
+    }
+
+    // Pass the image to ORB-SLAM3's tracking system
+    mSLAM.TrackMonocular(cv_ptr->image, cv_ptr->header.stamp.toSec());
+}
+
 
 ---------------------------------------------------------------------------------------------------
 #!/usr/bin/env python
