@@ -14,6 +14,58 @@ evo_ape tum GPS_march.tum KeyFrameTrajectory_yz.txt --verbose --align --correct_
 evo_traj tum  KeyFrameTrajectory.txt -vap --ref GPS_march.tum --correct_scale
 
 ---------------------------------------------------------------------------------------------------
+#!/usr/bin/env python
+
+import rospy
+import rosbag
+import cv2
+from cv_bridge import CvBridge
+from sensor_msgs.msg import CompressedImage, Image
+from image_transport import ImageTransport
+import torch  # Example for a model in PyTorch
+# import your segmentation model here
+
+def process_image(image):
+    # Perform segmentation on the image
+    # This is a dummy function. Replace with your model's inference code.
+    # For instance, if using PyTorch:
+    # segmented_image = model(image_tensor)
+    # Convert back to numpy if necessary
+    return segmented_image
+
+def main():
+    rospy.init_node('image_processing_node')
+
+    # Setup
+    bridge = CvBridge()
+    it = ImageTransport(rospy)  # For publishing and subscribing
+    pub = it.advertise("segmented_images", 1)
+    orbslam3_pub = it.advertise("orbslam3_input", 1)
+
+    # Load ROS bag
+    bag = rosbag.Bag('input.bag', 'r')
+
+    for topic, msg, t in bag.read_messages(topics=['/camera/image/compressed']):
+        # Convert compressed image to OpenCV format
+        np_arr = np.fromstring(msg.data, np.uint8)
+        cv_image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+
+        # Process image through segmentation model
+        segmented_image = process_image(cv_image)
+
+        # Convert back to ROS Image message
+        ros_image_msg = bridge.cv2_to_imgmsg(segmented_image, encoding="bgr8")
+
+        # Publish the segmented image
+        pub.publish(ros_image_msg)
+
+        # Optionally: Pass the segmented image to ORB-SLAM3
+        orbslam3_pub.publish(ros_image_msg)
+
+    bag.close()
+
+if __name__ == '__main__':
+    main()
 
 
 ---------------------------------------------------------------------------------------------------
