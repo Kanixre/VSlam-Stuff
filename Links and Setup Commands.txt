@@ -13,7 +13,15 @@ evo_ape tum GPS_march.tum KeyFrameTrajectory_yz.txt --verbose --align --correct_
 
 evo_traj tum  KeyFrameTrajectory.txt -vap --ref GPS_march.tum --correct_scale
 ------------
-
+[ERROR] [1724619594.394365]: bad callback: <bound method ImageSegmentationNode.image_callback of <__main__.ImageSegmentationNode object at 0x7f684a4cc4c0>>
+Traceback (most recent call last):
+  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/topics.py", line 750, in _invoke_callback
+    cb(msg)
+  File "/home/offiong/yolo_model/image_segment_node_2.py", line 66, in image_callback
+    segmented_image = self.process_segmentation(img)
+  File "/home/offiong/yolo_model/image_segment_node_2.py", line 51, in process_segmentation
+    return segmented_image
+UnboundLocalError: local variable 'segmented_image' referenced before assignment
 ---------------------------------------------------------------------------------------------------
 #!/usr/bin/env python
 
