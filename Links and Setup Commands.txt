@@ -13,15 +13,67 @@ evo_ape tum GPS_march.tum KeyFrameTrajectory_yz.txt --verbose --align --correct_
 
 evo_traj tum  KeyFrameTrajectory.txt -vap --ref GPS_march.tum --correct_scale
 ------------
-[ERROR] [1724619594.394365]: bad callback: <bound method ImageSegmentationNode.image_callback of <__main__.ImageSegmentationNode object at 0x7f684a4cc4c0>>
-Traceback (most recent call last):
-  File "/opt/ros/noetic/lib/python3/dist-packages/rospy/topics.py", line 750, in _invoke_callback
-    cb(msg)
-  File "/home/offiong/yolo_model/image_segment_node_2.py", line 66, in image_callback
-    segmented_image = self.process_segmentation(img)
-  File "/home/offiong/yolo_model/image_segment_node_2.py", line 51, in process_segmentation
-    return segmented_image
-UnboundLocalError: local variable 'segmented_image' referenced before assignment
+#!/usr/bin/env python
+
+import rospy
+from sensor_msgs.msg import CompressedImage, Image
+import cv2
+from cv_bridge import CvBridge, CvBridgeError
+import numpy as np
+
+class ImageSegmentationNode:
+    def __init__(self):
+        self.bridge = CvBridge()
+
+        # Subscribe to the compressed image topic from the ROS bag
+        self.image_sub = rospy.Subscriber('/camera/image/compressed', CompressedImage, self.image_callback)
+
+        # Publisher for the segmented image (this would be the input for ORB-SLAM3)
+        self.image_pub = rospy.Publisher('/segmented_image', Image, queue_size=1)
+
+    def image_callback(self, msg):
+        try:
+            # Decompress the image
+            np_arr = np.frombuffer(msg.data, np.uint8)
+            cv_image = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+
+            # Perform segmentation (replace with your model's processing function)
+            segmented_image = self.process_segmentation(cv_image)
+
+            # Convert the segmented image back to ROS Image message
+            segmented_msg = self.bridge.cv2_to_imgmsg(segmented_image, "bgr8")
+
+            # Publish the segmented image
+            self.image_pub.publish(segmented_msg)
+
+        except CvBridgeError as e:
+            rospy.logerr("CvBridgeError: {0}".format(e))
+
+    def process_segmentation(self, image):
+        # Default to the input image in case of any failure in segmentation
+        segmented_image = image
+        
+        try:
+            # Replace this with your actual segmentation model
+            # For example:
+            # segmented_image = your_segmentation_model(image)
+
+            # Just for demonstration, return the original image
+            segmented_image = image
+
+        except Exception as e:
+            rospy.logerr("Segmentation model error: {0}".format(e))
+
+        return segmented_image
+
+if __name__ == '__main__':
+    rospy.init_node('image_segmentation_node', anonymous=True)
+    node = ImageSegmentationNode()
+    try:
+        rospy.spin()
+    except KeyboardInterrupt:
+        rospy.loginfo("Shutting down")
+
 ---------------------------------------------------------------------------------------------------
 #!/usr/bin/env python
 
