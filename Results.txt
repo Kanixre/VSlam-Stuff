@@ -36,39 +36,39 @@ APE w.r.t. translation part (m)
 
 -------
 April===
-(evaluation) offiong@offiong-PC-XB02309:~/trajectories$ evo_ape tum GPS_april.tum KeyFrameTrajectory_april2.txt --verbose --align --correct_scale
+(evaluation) offiong@offiong-PC-XB02309:~/trajectories$ evo_ape tum GPS_april.tum KeyFrameTrajectory_april.txt --verbose --align --correct_scale
 --------------------------------------------------------------------------------
 Loaded 3064 stamps and poses from: GPS_april.tum
-Loaded 841 stamps and poses from: KeyFrameTrajectory_april2.txt
+Loaded 538 stamps and poses from: KeyFrameTrajectory_april.txt
 --------------------------------------------------------------------------------
 Synchronizing trajectories...
-Found 146 of max. 841 possible matching timestamps between...
+Found 95 of max. 538 possible matching timestamps between...
 	GPS_april.tum
-and:	KeyFrameTrajectory_april2.txt
+and:	KeyFrameTrajectory_april.txt
 ..with max. time diff.: 0.01 (s) and time offset: 0.0 (s).
 --------------------------------------------------------------------------------
 Aligning using Umeyama's method... (with scale correction)
 Rotation of alignment:
-[[-0.99837023 -0.02282179  0.05230732]
- [-0.05301938  0.0317989  -0.99808706]
- [ 0.02111481 -0.9992337  -0.03295708]]
+[[-0.99852449 -0.02585989  0.04775051]
+ [-0.0489704   0.0487966  -0.99760753]
+ [ 0.02346796 -0.99847391 -0.04999097]]
 Translation of alignment:
-[-5.64299155 -6.68367745 -0.02108749]
-Scale correction: 2.388416579472998
+[-6.43049832 -0.51812667  0.03802394]
+Scale correction: 3.4847524345453427
 --------------------------------------------------------------------------------
-Compared 146 absolute pose pairs.
+Compared 95 absolute pose pairs.
 Calculating APE for translation part pose relation...
 --------------------------------------------------------------------------------
 APE w.r.t. translation part (m)
 (with Sim(3) Umeyama alignment)
 
-       max	5.202366
-      mean	1.773371
-    median	1.520475
-       min	0.096123
-      rmse	2.121463
-       sse	657.088549
-       std	1.164372
+       max	2.694506
+      mean	0.504633
+    median	0.284294
+       min	0.037067
+      rmse	0.721868
+       sse	49.503848
+       std	0.516177
 
 -------
 May===
