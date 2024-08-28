@@ -15,32 +15,22 @@ evo_traj tum  KeyFrameTrajectory.txt -vap --ref GPS_march.tum --correct_scale
 ------------
 import rosbag
 
-def count_messages(bag_file):
-    # Open the bag file
-    with rosbag.Bag(bag_file, 'r') as bag:
-        # Initialize a counter for total messages
-        total_count = 0
-        
-        # Initialize a dictionary to count messages per topic
-        topic_counts = {}
+# Open the bag file
+bag = rosbag.Bag('your_rosbag_file.bag')
 
-        # Iterate through each message in the bag
-        for topic, msg, t in bag.read_messages():
-            total_count += 1
-            if topic not in topic_counts:
-                topic_counts[topic] = 0
-            topic_counts[topic] += 1
+# Specify the topic you want to count messages for
+topic_name = '/your_topic_name'
+message_count = 0
 
-    return total_count, topic_counts
+# Count the number of messages
+for topic, msg, t in bag.read_messages(topics=[topic_name]):
+    message_count += 1
 
-if __name__ == "__main__":
-    bag_file = 'your_bag_file.bag'  # Replace with your ROS bag file
-    total_messages, messages_per_topic = count_messages(bag_file)
+# Print the result
+print(f"Total messages in topic {topic_name}: {message_count}")
 
-    print(f"Total number of messages: {total_messages}")
-    print("Number of messages per topic:")
-    for topic, count in messages_per_topic.items():
-        print(f"{topic}: {count}")
+# Close the bag file
+bag.close()
 
 
 ---------------------------------------------------------------------------------------------------
