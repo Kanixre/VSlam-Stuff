@@ -1,0 +1,44 @@
+-------
+March===
+(evaluation) offiong@offiong-PC-XB02309:~/trajectories$ evo_ape tum KeyFrameTrajectory_march_segment_test_2_updated.txt GPS_march.tum -as -v
+--------------------------------------------------------------------------------
+Loaded 564 stamps and poses from: KeyFrameTrajectory_march_segment_test_2_updated.txt
+Loaded 4097 stamps and poses from: GPS_march.tum
+--------------------------------------------------------------------------------
+Synchronizing trajectories...
+Found 97 of max. 564 possible matching timestamps between...
+	KeyFrameTrajectory_march_segment_test_2_updated.txt
+and:	GPS_march.tum
+..with max. time diff.: 0.01 (s) and time offset: 0.0 (s).
+--------------------------------------------------------------------------------
+Aligning using Umeyama's method... (with scale correction)
+Rotation of alignment:
+[[-0.71289136 -0.52745717  0.46214158]
+ [ 0.6275724  -0.18575471  0.75607411]
+ [-0.31295173  0.82902601  0.46344049]]
+Translation of alignment:
+[-0.79884786 -0.28582935  1.2593181 ]
+Scale correction: 0.004062201355050161
+--------------------------------------------------------------------------------
+Compared 97 absolute pose pairs.
+Calculating APE for translation part pose relation...
+--------------------------------------------------------------------------------
+APE w.r.t. translation part (m)
+(with Sim(3) Umeyama alignment)
+
+       max	0.865133
+      mean	0.141598
+    median	0.100022
+       min	0.011524
+      rmse	0.212660
+       sse	4.386752
+       std	0.158664
+
+-------
+April===
+
+-------
+May===
+
+-------
+June===
