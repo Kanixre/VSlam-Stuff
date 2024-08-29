@@ -15,24 +15,44 @@ evo_traj tum  KeyFrameTrajectory.txt -vap --ref GPS_march.tum --correct_scale
 
 found no matching timestamps between reference and KeyFrameTrajectory
 ------------
-import rosbag
+import numpy as np
 
-# Open the bag file
-bag = rosbag.Bag('your_rosbag_file.bag')
+def extract_timestamps(file_path):
+    """Extract timestamps from a TUM format file."""
+    timestamps = []
+    with open(file_path, 'r') as file:
+        for line in file:
+            if line.strip():  # Ensure the line is not empty
+                timestamps.append(float(line.split()[0]))
+    return timestamps
 
-# Specify the topic you want to count messages for
-topic_name = '/your_topic_name'
-message_count = 0
+def update_file_with_timestamps(input_file, output_file, new_timestamps):
+    """Update a TUM format file with new timestamps."""
+    with open(input_file, 'r') as file, open(output_file, 'w') as out_file:
+        lines = file.readlines()
+        for i, line in enumerate(lines):
+            # Replace the old timestamp with the new one
+            new_line = f"{new_timestamps[i]:.6f} {line.split(maxsplit=1)[1]}"
+            out_file.write(new_line)
 
-# Count the number of messages
-for topic, msg, t in bag.read_messages(topics=[topic_name]):
-    message_count += 1
+# Paths to your files
+file1_path = 'KeyFrameTrajectory_march_segment_test_2.txt'
+file2_path = 'KeyFrameTrajectory_march.txt'
+output_file_path = 'KeyFrameTrajectory_march_segment_test_2_updated.txt'
 
-# Print the result
-print(f"Total messages in topic {topic_name}: {message_count}")
+# Step 1: Extract timestamps from the reference file
+reference_timestamps = np.array(extract_timestamps(file2_path))
 
-# Close the bag file
-bag.close()
+# Step 2: Determine the number of entries in the file to be updated
+num_entries_file1 = len(extract_timestamps(file1_path))
+
+# Step 3: Generate new timestamps by scaling the reference timestamps
+new_timestamps_file1 = np.linspace(reference_timestamps[0], reference_timestamps[-1], num_entries_file1)
+
+# Step 4: Update the file with the new timestamps
+update_file_with_timestamps(file1_path, output_file_path, new_timestamps_file1)
+
+print(f"Updated file saved as {output_file_path}")
 
 
 ---------------------------------------------------------------------------------------------------
