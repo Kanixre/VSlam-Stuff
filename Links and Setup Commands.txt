@@ -12,6 +12,8 @@ rosrun image_transport republish compressed in:=/front/zed_node/rgb/image_rect_c
 evo_ape tum GPS_march.tum KeyFrameTrajectory_yz.txt --verbose --align --correct_scale
 
 evo_traj tum  KeyFrameTrajectory.txt -vap --ref GPS_march.tum --correct_scale
+
+found no matching timestamps between reference and KeyFrameTrajectory
 ------------
 import rosbag
 
