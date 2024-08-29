@@ -1,0 +1,155 @@
+--------
+March===
+(evaluation) offiong@offiong-PC-XB02309:~/trajectories$ evo_rpe tum KeyFrameTrajectory_march.txt GPS_march.tum -as -v
+--------------------------------------------------------------------------------
+Loaded 813 stamps and poses from: KeyFrameTrajectory_march.txt
+Loaded 4097 stamps and poses from: GPS_march.tum
+--------------------------------------------------------------------------------
+Synchronizing trajectories...
+Found 137 of max. 813 possible matching timestamps between...
+	KeyFrameTrajectory_march.txt
+and:	GPS_march.tum
+..with max. time diff.: 0.01 (s) and time offset: 0.0 (s).
+--------------------------------------------------------------------------------
+Aligning using Umeyama's method... (with scale correction)
+Rotation of alignment:
+[[-0.99828034 -0.05616578  0.01678621]
+ [-0.01879659  0.03545891 -0.99919435]
+ [ 0.05552531 -0.9977916  -0.03645366]]
+Translation of alignment:
+[-2.38779553 -0.05272124  0.04123712]
+Scale correction: 0.36681946872252064
+--------------------------------------------------------------------------------
+Found 136 pairs with delta 1 (frames) among 137 poses using consecutive pairs.
+Compared 136 relative pose pairs, delta = 1 (frames) with consecutive pairs.
+Calculating RPE for translation part pose relation...
+--------------------------------------------------------------------------------
+RPE w.r.t. translation part (m)
+for delta = 1 (frames) using consecutive pairs
+(with Sim(3) Umeyama alignment)
+
+       max	6.767624
+      mean	0.549788
+    median	0.245158
+       min	0.005776
+      rmse	1.150780
+       sse	180.104156
+       std	1.010954
+
+
+-------
+April===
+(evaluation) offiong@offiong-PC-XB02309:~/trajectories$ evo_rpe tum GPS_april.tum KeyFrameTrajectory_april.txt --verbose --align --correct_scale
+--------------------------------------------------------------------------------
+Loaded 3064 stamps and poses from: GPS_april.tum
+Loaded 538 stamps and poses from: KeyFrameTrajectory_april.txt
+--------------------------------------------------------------------------------
+Synchronizing trajectories...
+Found 95 of max. 538 possible matching timestamps between...
+	GPS_april.tum
+and:	KeyFrameTrajectory_april.txt
+..with max. time diff.: 0.01 (s) and time offset: 0.0 (s).
+--------------------------------------------------------------------------------
+Aligning using Umeyama's method... (with scale correction)
+Rotation of alignment:
+[[-0.99852449 -0.02585989  0.04775051]
+ [-0.0489704   0.0487966  -0.99760753]
+ [ 0.02346796 -0.99847391 -0.04999097]]
+Translation of alignment:
+[-6.43049832 -0.51812667  0.03802394]
+Scale correction: 3.4847524345453427
+--------------------------------------------------------------------------------
+Found 94 pairs with delta 1 (frames) among 95 poses using consecutive pairs.
+Compared 94 relative pose pairs, delta = 1 (frames) with consecutive pairs.
+Calculating RPE for translation part pose relation...
+--------------------------------------------------------------------------------
+RPE w.r.t. translation part (m)
+for delta = 1 (frames) using consecutive pairs
+(with Sim(3) Umeyama alignment)
+
+       max	33.045281
+      mean	1.903100
+    median	0.644520
+       min	0.013811
+      rmse	4.314736
+       sse	1749.993143
+       std	3.872358
+
+
+-------
+May===
+(evaluation) offiong@offiong-PC-XB02309:~/trajectories$ evo_rpe tum GPS_may.tum KeyFrameTrajectory_may.txt --verbose --align --correct_scale
+--------------------------------------------------------------------------------
+Loaded 1573 stamps and poses from: GPS_may.tum
+Loaded 871 stamps and poses from: KeyFrameTrajectory_may.txt
+--------------------------------------------------------------------------------
+Synchronizing trajectories...
+Found 51 of max. 871 possible matching timestamps between...
+	GPS_may.tum
+and:	KeyFrameTrajectory_may.txt
+..with max. time diff.: 0.01 (s) and time offset: 0.0 (s).
+--------------------------------------------------------------------------------
+Aligning using Umeyama's method... (with scale correction)
+Rotation of alignment:
+[[-0.99973372 -0.00581234  0.02233155]
+ [-0.02262031  0.05556349 -0.99819889]
+ [ 0.00456105 -0.99843824 -0.05568017]]
+Translation of alignment:
+[-6.50414572 -0.11035936  0.01146968]
+Scale correction: 2.9178437942400195
+--------------------------------------------------------------------------------
+Found 50 pairs with delta 1 (frames) among 51 poses using consecutive pairs.
+Compared 50 relative pose pairs, delta = 1 (frames) with consecutive pairs.
+Calculating RPE for translation part pose relation...
+--------------------------------------------------------------------------------
+RPE w.r.t. translation part (m)
+for delta = 1 (frames) using consecutive pairs
+(with Sim(3) Umeyama alignment)
+
+       max	30.788590
+      mean	4.306278
+    median	1.826663
+       min	0.161670
+      rmse	7.350919
+       sse	2701.800755
+       std	5.957515
+
+
+-------
+June===
+(evaluation) offiong@offiong-PC-XB02309:~/trajectories$ evo_rpe tum GPS_june.tum KeyFrameTrajectory_june.txt --verbose --align --correct_scale
+--------------------------------------------------------------------------------
+Loaded 2498 stamps and poses from: GPS_june.tum
+Loaded 915 stamps and poses from: KeyFrameTrajectory_june.txt
+--------------------------------------------------------------------------------
+Synchronizing trajectories...
+Found 88 of max. 915 possible matching timestamps between...
+	GPS_june.tum
+and:	KeyFrameTrajectory_june.txt
+..with max. time diff.: 0.01 (s) and time offset: 0.0 (s).
+--------------------------------------------------------------------------------
+Aligning using Umeyama's method... (with scale correction)
+Rotation of alignment:
+[[ 0.99680765  0.06268802 -0.04944411]
+ [ 0.05053932 -0.01600629  0.9985938 ]
+ [ 0.06180845 -0.99790481 -0.01912341]]
+Translation of alignment:
+[ -1.16067164 -28.09325722   0.05184291]
+Scale correction: 2.1991208459802314
+--------------------------------------------------------------------------------
+Found 87 pairs with delta 1 (frames) among 88 poses using consecutive pairs.
+Compared 87 relative pose pairs, delta = 1 (frames) with consecutive pairs.
+Calculating RPE for translation part pose relation...
+--------------------------------------------------------------------------------
+RPE w.r.t. translation part (m)
+for delta = 1 (frames) using consecutive pairs
+(with Sim(3) Umeyama alignment)
+
+       max	12.592683
+      mean	1.458161
+    median	0.604075
+       min	0.015667
+      rmse	2.530945
+       sse	557.294554
+       std	2.068684
+
